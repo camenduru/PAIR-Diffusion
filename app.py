@@ -129,7 +129,6 @@ class ImageComp:
         maski[mask_ > 127] = 1
         mask = maski * panoptic_mask_
         unique_ids, counts = torch.unique(mask, return_counts=True)
-        # print(unique_ids, counts)
         mask_id = unique_ids[torch.argmax(counts[1:]) + 1]
         final_mask = torch.zeros(mask.shape).cuda()
         final_mask[panoptic_mask_ == mask_id] = 1
@@ -214,7 +213,7 @@ class ImageComp:
         seed_everything(seed)
 
         scale = [scale_s, scale_f, scale_t]
-        print(scale)
+        # print(scale)
         if save_memory:
             model.low_vram_shift(is_diffusing=False)
         # uc_cross = model.get_unconditional_conditioning(num_samples)
@@ -256,7 +255,6 @@ def create_app_demo():
 
     with gr.Row():
         gr.Markdown("## Object Level Appearance Editing")
-        print('first row')
     with gr.Row():
         gr.HTML(
             """
@@ -264,15 +262,13 @@ def create_app_demo():
             <h3 style="font-weight: 450; font-size: 1rem; margin-top: 0.8rem; margin-bottom: 0.8rem">
             Instructions </h3>
             <ol>
-                <li>1. Upload an Input Image.</li>
-                <li>2. Mark one of segmented objects in the <i>Select Object to Edit</i> tab.</li>
-                <li>3. Upload an Reference Image.</li>
-                <li>4. Mark  one of segmented objects in the <i>Select Reference Object</i> tab, whose appearance needs to used in the selected input object.</li>
-                <li>5. Enter a prompt and press <i>Run</i> button. (A very simple would also work) </li>
-            </ol>
+                <li>Upload an Input Image.</li>
+                <li>Mark one of segmented objects in the <i>Select Object to Edit</i> tab.</li>
+                <li>Upload an Reference Image.</li>
+                <li>Mark  one of segmented objects in the <i>Select Reference Object</i> tab, whose appearance needs to used in the selected input object.</li>
+                <li>Enter a prompt and press <i>Run</i> button. (A very simple would also work) </li>
             </ol>
             </div>""")
-        print('second row')
     with gr.Column():
         with gr.Row():
             img_edit = ImageComp('edit_app')
@@ -364,7 +360,7 @@ with block:
             <a href=" https://people.eecs.berkeley.edu/~trevor/" style="color:blue;">Trevor Darrell</a><sup>4</sup>, 
             <a href="https://vita-group.github.io/" style="color:blue;">Zhangyang Wang</a><sup>1,3</sup>
             and <a href="https://www.humphreyshi.com/home" style="color:blue;">Humphrey Shi</a> <sup>1,5,6</sup> <br>
-            [<a href="https://github.com/Picsart-AI-Research/PAIR-Diffusion" style="color:red;">arXiv</a>] 
+            [<a href="https://arxiv.org/abs/2303.17546" style="color:red;">arXiv</a>] 
             [<a href="https://github.com/Picsart-AI-Research/PAIR-Diffusion" style="color:red;">GitHub</a>]
             </h2>
             <h3 style="font-weight: 450; font-size: 1rem; margin: 0rem">
@@ -384,6 +380,11 @@ with block:
     
     with gr.Tab('Edit Appearance'):
         create_app_demo()
+        gr.HTML("""<br><p>&nbsp Visual guide to use the demo</p><br>
+            <div id="myinst">
+            <img src="file/assets/GIF.gif" width="400" height="400">
+            </div>
+            """)
     with gr.Tab('Edit Structure'):
         create_struct_demo()
     with gr.Tab('Edit Both'):
@@ -391,23 +392,4 @@ with block:
 
 
 
-
-
-print('Launching')
-block.launch(debug=True)
-
-
-# import gradio as gr
-# from transformers import pipeline
-
-# # pipeline = pipeline(task="image-classification", model="julien-c/hotdog-not-hotdog")
-
-# def predict(image):
-#     return {"hot dog": 0.1 for p in range(2)}
-
-# gr.Interface(
-#     predict,
-#     inputs=gr.inputs.Image(label="Upload hot dog candidate", type="filepath"),
-#     outputs=gr.outputs.Label(num_top_classes=2),
-#     title="Hot Dog? Or Not?",
-# ).launch()
+block.launch(share=True)
