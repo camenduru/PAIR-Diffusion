@@ -213,7 +213,7 @@ class ImageComp:
         seed_everything(seed)
 
         scale = [scale_s, scale_f, scale_t]
-        # print(scale)
+        print(scale)
         if save_memory:
             model.low_vram_shift(is_diffusing=False)
         # uc_cross = model.get_unconditional_conditioning(num_samples)
@@ -248,7 +248,26 @@ css = """
      h1 {
   text-align: center;
 }
+.container {
+  display: flex;  
+  justify-content: space-between
+}
 
+img {
+  max-width: 100%
+  padding-right: 100px;
+}
+
+.image {
+  flex-basis: 40%
+
+}
+
+.text {
+  font-size: 15px;
+  padding-right: 20px;
+  padding-left: 0px;
+}
 """
 
 def create_app_demo():
@@ -258,17 +277,22 @@ def create_app_demo():
     with gr.Row():
         gr.HTML(
             """
-            <div style="text-align: left; max-width: 1200px;">
-            <h3 style="font-weight: 450; font-size: 1rem; margin-top: 0.8rem; margin-bottom: 0.8rem">
-            Instructions </h3>
-            <ol>
-                <li>Upload an Input Image.</li>
-                <li>Mark one of segmented objects in the <i>Select Object to Edit</i> tab.</li>
-                <li>Upload an Reference Image.</li>
-                <li>Mark  one of segmented objects in the <i>Select Reference Object</i> tab, whose appearance needs to used in the selected input object.</li>
-                <li>Enter a prompt and press <i>Run</i> button. (A very simple would also work) </li>
-            </ol>
-            </div>""")
+            <div class="container">
+                <div class="text">
+                    <h4> Instructions </h4>
+                    <ol>
+                        <li>Upload an Input Image.</li>
+                        <li>Mark one of segmented objects in the <i>Select Object to Edit</i> tab.</li>
+                        <li>Upload an Reference Image.</li>
+                        <li>Mark  one of segmented objects in the <i>Select Reference Object</i> tab, for the reference appearance.</li>
+                        <li>Enter a prompt and press <i>Run</i> button. (A very simple would also work) </li>
+                    </ol>
+                </div>
+                <div class="image">
+                    <img src="file/assets/GIF.gif" width="400"">
+                </div>
+            </div>
+            """)
     with gr.Column():
         with gr.Row():
             img_edit = ImageComp('edit_app')
@@ -380,11 +404,6 @@ with block:
     
     with gr.Tab('Edit Appearance'):
         create_app_demo()
-        gr.HTML("""<br><p>&nbsp Visual guide to use the demo</p><br>
-            <div id="myinst">
-            <img src="file/assets/GIF.gif" width="400" height="400">
-            </div>
-            """)
     with gr.Tab('Edit Structure'):
         create_struct_demo()
     with gr.Tab('Edit Both'):
