@@ -1,0 +1,47 @@
+addict==2.4.0
+albumentations==1.3.0
+einops==0.3.0
+gradio==3.16.2
+imageio==2.9.0
+imageio-ffmpeg==0.4.2
+kornia==0.6.0
+omegaconf==2.3.0
+open-clip-torch==2.0.2
+opencv-contrib-python==4.3.0.36
+opencv-python-headless==4.7.0.72
+prettytable==3.6.0
+pytorch-lightning==1.5.0
+safetensors==0.2.7
+timm==0.6.12
+transformers==4.19.2
+# torch
+yapf==0.32.0
+--extra-index-url https://download.pytorch.org/whl
+torch==1.10.0+cu113 
+torchvision==0.11.0+cu113
+torchaudio==0.10.0
+numpy==1.23
+-f https://dl.fbaipublicfiles.com/detectron2/wheels/cu113/torch1.10/index.html
+detectron2==0.6
+opencv-python
+git+https://github.com/cocodataset/panopticapi.git
+git+https://github.com/mcordts/cityscapesScripts.git
+imutils==0.5.4
+# natten==0.14.4
+cython
+setuptools==59.5.0
+scipy
+shapely
+h5py
+submitit
+scikit-image
+icecream
+wandb
+ftfy 
+regex
+inflect
+diffdist
+gdown
+huggingface_hub
+tqdm
+wget
