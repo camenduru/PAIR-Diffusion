@@ -35,9 +35,7 @@ for repo in urls:
     for file in files:
         url = hf_hub_url(repo, file)
         name_ckp = url.split('/')[-1]
-        save_path = os.path.join('checkpoints', name_ckp)
-        if os.path.exists(save_path) == False:
-            WTS_DICT[repo] = hf_hub_download(repo_id=repo, filename=file, token=os.environ.get("ACCESS_TOKEN"))
+        WTS_DICT[repo] = hf_hub_download(repo_id=repo, filename=file, token=os.environ.get("ACCESS_TOKEN"))
 
 print(WTS_DICT)
 apply_segmentor = OneformerSegmenter(WTS_DICT['shi-labs/oneformer_coco_swin_large'])
@@ -402,6 +400,13 @@ with block:
             </div>
             """)
     
+    gr.HTML("""
+            <p>For faster inference without waiting in queue, you may duplicate the space and upgrade to GPU in settings.
+            <br/>
+            <a href="https://huggingface.co/spaces/PAIR/PAIR-Diffusion?duplicate=true">
+            <img style="margin-top: 0em; margin-bottom: 0em" src="https://bit.ly/3gLdBN6" alt="Duplicate Space"></a>
+            </p>""")
+    
     with gr.Tab('Edit Appearance'):
         create_app_demo()
     with gr.Tab('Edit Structure'):
@@ -410,5 +415,5 @@ with block:
         create_both_demo()
 
 
-
+block.queue(max_size=20)
 block.launch(debug=True)
